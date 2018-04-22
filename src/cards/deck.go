@@ -2,6 +2,9 @@ package main
 
 import (
 	"fmt"
+	"strings"
+	"io/ioutil"
+	"os"
 )
 
 //Create a new type of deck
@@ -38,4 +41,21 @@ func (d deck) countCards() int {
 
 func deal(d deck, handsize int) (deck, deck) {
 	return d[:handsize], d[handsize:]
+}
+
+func (d deck) toString() string {
+	return strings.Join([]string(d),",")
+}
+
+func (d deck) saveToFile(filename string) error{	
+	return ioutil.WriteFile(filename, []byte(d.toString()), 0655)
+}
+
+func newDeckFromFile(filename string) (deck){
+	byteslice, err := (ioutil.ReadFile(filename))
+	if err != nil{
+		fmt.Println("Error:",err)
+		os.Exit(1) //this indicates that there were an error in our program
+	}
+	
 }
