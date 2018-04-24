@@ -12,6 +12,6 @@ func TestNewDeck(t *testing.T) { //the "t" is our test handler/manipulator
 	d := newDeck()
 
 	if len(d) != 40 {
-		t.Errorf("Expected deck lenght of 20, but got", len(d))
+		t.Errorf("Expected deck lenght of 20, but got %v", len(d))
 	}
 }
