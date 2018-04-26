@@ -8,9 +8,16 @@ The star become a operator when it is inside the function (now the star indicate
 
 ![alt text](https://raw.githubusercontent.com/FelipeRando/go-workspace/master/pointer-in-a-function-explained.png)
 
+
+
 You can pass a variable to a pointer receiver in both ways
 ![alt text](https://raw.githubusercontent.com/FelipeRando/go-workspace/master/ways-to-pass-a-pointer-to-a-function.png)
+
+
 
 However with slices you dont need to pass a pointer of a sclice into a function to get a value modified
 
 ![alt text](https://raw.githubusercontent.com/FelipeRando/go-workspace/master/value-and-reference-types.png)
+
+
+![alt text](https://raw.githubusercontent.com/FelipeRando/go-workspace/master/map-vs-struct.png)
