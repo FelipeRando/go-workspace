@@ -1,2 +1,2 @@
 Things to remember about go
-![alt text](https://raw.githubusercontent.com/feliperando/go-workspace/master/pointers-in-a-nuthshell.png)
+![alt text](https://raw.githubusercontent.com/FelipeRando/go-workspace/master/pointers-in-a-nutshell.png)
