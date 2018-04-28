@@ -25,3 +25,5 @@ However with slices you dont need to pass a pointer of a sclice into a function 
 ![alt text](https://raw.githubusercontent.com/FelipeRando/go-workspace/master/interface.png)
 
 ![alt text](https://raw.githubusercontent.com/FelipeRando/go-workspace/master/response-struct.png)
+
+![alt text](https://raw.githubusercontent.com/FelipeRando/go-workspace/master/reader-interface.png)
