@@ -27,3 +27,7 @@ However with slices you dont need to pass a pointer of a sclice into a function 
 ![alt text](https://raw.githubusercontent.com/FelipeRando/go-workspace/master/response-struct.png)
 
 ![alt text](https://raw.githubusercontent.com/FelipeRando/go-workspace/master/reader-interface.png)
+
+
+Here's a picture on how the Reader interface works
+![alt text](https://raw.githubusercontent.com/FelipeRando/go-workspace/master/how_Reader_interface_works.png)

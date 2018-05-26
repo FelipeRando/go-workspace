@@ -7,8 +7,6 @@ import (
 	"os"
 )
 
-type logWriter struct{}
-
 func main() {
 	resp, err := http.Get("http://google.com/")
 	if err != nil {
@@ -19,16 +17,10 @@ func main() {
 	//we have to create byte slice using make and n empty spaces
 	//because the Read function is not configured to resize the slice if it is full
 	r := make([]byte, 9999)
-	resp.Body.Read(r)
+	resp.Body.Read(r) //the Read function in Resp.Body will fill our byte slice with data
 	fmt.Println(string(r))
 
-	lw := logWriter{}
-
 	//the same thing is here
-	io.Copy(lw, resp.Body)
+	io.Copy(os.Stdout, resp.Body)
 }
-
-func (logWriter) Write(bs []byte) (int, error) {
-	fmt.Println(string(bs))
-	return len(bs), nil
-}
+ 
