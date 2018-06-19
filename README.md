@@ -31,3 +31,22 @@ However with slices you dont need to pass a pointer of a sclice into a function 
 
 Here's a picture on how the Reader interface works
 ![alt text](https://raw.githubusercontent.com/FelipeRando/go-workspace/master/how_Reader_interface_works.png)
+
+# IMPORTING:
+When you import something any package from github you CAN have 
+```
+$GOPATH/src/github.com/user/go.code
+```
+
+and on the first line of the file you can have
+```
+package code
+```
+this is totally fine, and inside your code you import using
+```
+"github.com/user/go.code"
+```
+and calls this package's functions with 
+```
+code.Function()
+```

@@ -5,19 +5,25 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"strconv"
 )
 
 func main() {
 	http.HandleFunc("/", setCookie)
 	http.HandleFunc("/read", readCookie)
+	http.Handle("/favicon.ico", http.NotFoundHandler())
 	http.ListenAndServe(":8080", nil)
 }
 
 func setCookie(w http.ResponseWriter, r *http.Request) {
 	pointerToCookie := &http.Cookie{
 		Name:  "my-cookie",
-		Value: "some value",
+		Value: "0",
 	}
+	//you can pass multiple cookies in one request, just add cookies in another call to SetCookie function
+	count, _ := strconv.Atoi(pointerToCookie.Value) //convert string to int
+	count++
+	pointerToCookie.Value = strconv.Itoa(count) //convert int to string
 	http.SetCookie(w, pointerToCookie)
 	fmt.Fprintln(w, "COOKIE WRITTEN - CHECK YOUR BROWSER")
 	fmt.Fprintln(w, "in chrome go to: dev tools / application / cookies")
