@@ -50,3 +50,6 @@ and calls this package's functions with
 ```
 code.Function()
 ```
+
+About Performance:
+In high performance code, constantly creating new strings adds a lot of load on the garbage collector.
