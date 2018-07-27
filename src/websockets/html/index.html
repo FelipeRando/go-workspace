@@ -7,10 +7,21 @@
          {
                var ws = new WebSocket("ws://localhost:3000/websocket");
 
+               ws.onopen = function()
+               {
+                  // Web Socket is connected, send data using send()
+                  ws.send("ping");
+                  var myTextArea = document.getElementById("textarea1");
+                  myTextArea.value = myTextArea.value + "\n" + "First message sent";
+               };
+
                ws.onmessage = function (evt)
                {
                   var myTextArea = document.getElementById("textarea1");
                   myTextArea.value = myTextArea.value + "\n" + evt.data
+                  if(evt.data == "pong") {
+                    setTimeout(function(){ws.send("ping");}, 2000);
+                  }
                };
 
                ws.onclose = function()
@@ -25,7 +36,7 @@
 
 </head>
 <body>
-<button onclick="javascript:myWebsocketStart()">Subscribe</button>
+<button onclick="javascript:myWebsocketStart()">Start websocket!</button>
 <textarea id="textarea1">MyTextArea</textarea>
 </body>
 </html>
