@@ -1,5 +1,5 @@
 config:
-  target: "ws://35.225.171.95/websocket"
+  target: "ws://localhost:3000/websocket"
   phases:
     - duration: 640
       arrivalRate: 100
