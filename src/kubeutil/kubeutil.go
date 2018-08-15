@@ -3,10 +3,12 @@ package main
 import (
 	"flag"
 	"fmt"
+	"kubeutil/commands"
 )
 
 func main() {
-	sayHello := flag.String("say-hello", "Thanks for using kubeutil", "this command says hello")
+	saySomething := *commands.SaySomething()
 	flag.Parse()
-	fmt.Println(*sayHello)
+	fmt.Println(saySomething)
+
 }
