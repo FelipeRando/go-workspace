@@ -14,12 +14,11 @@ type serviceAccount struct {
 
 type clusterRoleBinding struct {
 	SvcAcc *serviceAccount
-	Name   string
 }
 
 func main() {
 	//configure service account
-	svcAcc := serviceAccount{"yes-man", "vault-tec"}
+	svcAcc := serviceAccount{"overseer", "vault-tec"}
 	serviceAccountContent := fmt.Sprintf(`---
 apiVersion: v1
 kind: ServiceAccount
@@ -28,7 +27,7 @@ metadata:
   namespace: %s`, svcAcc.Name, svcAcc.Namespace)
 
 	//configure cluster role binding
-	cRlBnd := clusterRoleBinding{&svcAcc, "yes-man"}
+	cRlBnd := clusterRoleBinding{&svcAcc}
 	clusterRoleBindingContent := fmt.Sprintf(`---
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
@@ -41,18 +40,20 @@ subjects:
 roleRef:
   kind: ClusterRole
   name: view
-  apiGroup: rbac.authorization.k8s.io`, cRlBnd.Name, cRlBnd.SvcAcc.Name, cRlBnd.SvcAcc.Namespace)
+  apiGroup: rbac.authorization.k8s.io`, cRlBnd.SvcAcc.Name, cRlBnd.SvcAcc.Name, cRlBnd.SvcAcc.Namespace)
 	fmt.Println(serviceAccountContent)
 	fmt.Println(clusterRoleBindingContent)
 
 	//create File
 	serviceAccountFile, err := os.Create("serviceAccount.yaml")
 	if err != nil {
+		log.Fatal(err)
 		panic(err)
 	}
 
 	clusterRoleBindingFile, err := os.Create("clusterRoleBinding.yaml")
 	if err != nil {
+		log.Fatal(err)
 		panic(err)
 	}
 	//create byte slices that will be written to the files
@@ -62,11 +63,13 @@ roleRef:
 	//finally write the bite slices to the two files
 	serviceAccountWrite, err := serviceAccountFile.Write(serviceAccountBytes)
 	if serviceAccountWrite != len(serviceAccountBytes) {
+		log.Fatal(err)
 		panic(err)
 	}
 
 	clusterRoleBindingWrite, err := clusterRoleBindingFile.Write(clusterRoleBindingBytes)
 	if clusterRoleBindingWrite != len(clusterRoleBindingBytes) {
+		log.Fatal(err)
 		panic(err)
 	}
 
@@ -85,7 +88,10 @@ func applyYAML(YAMLFile string) {
 }
 
 func printToken(serviceName, serviceNamespace string) {
-	out, err := exec.Command("kubectl", "-n", serviceNamespace, "describe", "secret", "$(kubectl -n kube-system get secret | grep "+serviceName+" | awk '{print $1}')").Output()
+	cmd := "kubectl -n " + serviceNamespace + " get secret | grep " + serviceName + "-token | awk '{print $1}'"
+	tokenName, err := exec.Command("bash", "-c", cmd).Output()
+	cmd2 := "kubectl -n " + serviceNamespace + " describe secret " + string(tokenName)
+	out, err := exec.Command("bash", "-c", cmd2).Output()
 	if err != nil {
 		log.Fatal(err)
 	}
