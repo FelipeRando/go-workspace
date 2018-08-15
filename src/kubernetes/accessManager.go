@@ -80,7 +80,7 @@ roleRef:
 }
 
 func applyYAML(YAMLFile string) {
-	out, err := exec.Command("kubectl", "apply", "-f", YAMLFile).Output()
+	out, err := exec.Command("/usr/local/bin/kubectl", "apply", "-f", YAMLFile).Output()
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -88,9 +88,9 @@ func applyYAML(YAMLFile string) {
 }
 
 func printToken(serviceName, serviceNamespace string) {
-	cmd := "kubectl -n " + serviceNamespace + " get secret | grep " + serviceName + "-token | awk '{print $1}'"
+	cmd := "/usr/local/bin/kubectl -n " + serviceNamespace + " get secret | grep " + serviceName + "-token | awk '{print $1}'"
 	tokenName, err := exec.Command("bash", "-c", cmd).Output()
-	cmd2 := "kubectl -n " + serviceNamespace + " describe secret " + string(tokenName)
+	cmd2 := "/usr/local/bin/kubectl -n " + serviceNamespace + " describe secret " + string(tokenName)
 	out, err := exec.Command("bash", "-c", cmd2).Output()
 	if err != nil {
 		log.Fatal(err)
